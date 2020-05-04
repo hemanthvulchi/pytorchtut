@@ -20,11 +20,36 @@ result=torch.empty(5,3)
 torch.add(x,y, out=result)
 print(result)
 y.add_(x)
+
 print(y)
 print(y[:, 1])
+
 print("Resizing")
 x=torch.randn(4,4)
 y= x.view(16)
 z=x.view(8,-1)
 print(x.size(),y.size(),z.size())
-print
+
+# print("item")
+# x=torch.randn(1)
+# print(x)
+# print(x.item())
+
+print("numpy")
+a = torch.ones(5)
+print(a)
+b = a.numpy()
+print(b)
+a.add_(1)
+print(a)
+print(b)
+
+print("Cuda Code")
+if torch.cuda.is_available():
+    device = torch.device("cuda")          
+    y = torch.ones_like(x, device=device)  
+    x = x.to(device)                       
+    z = x + y
+    print(z)
+    print(z.to(device, torch.double))     
+    print(z.to("cpu", torch.double))     
